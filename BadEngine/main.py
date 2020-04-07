@@ -123,10 +123,10 @@ class Input: #to check for input
     def Key(self, KeyCode, KeyFunction): #making the input system easy
 
         for event in pygame.event.get():
-
             if KeyFunction == 'keyd': #seeing if the key is down or not
                 if event.type == KEYDOWN:
                     if event.key == self.Keys(self, KeyCode):
+                        print(KeyCode + ' was pressed')
                         return True
 
             if KeyFunction == 'keyu': #seeing if the key is up
@@ -134,19 +134,21 @@ class Input: #to check for input
                     if event.key == self.Keys(self, KeyCode):
                         return True
 
-    def Quit(self): #a qick preset event
-        for event in pygame.event.get():
-            if event.type == QUIT:
-                pygame.quit()
-                sys.exit()
+            if KeyFunction == 'quit':
+                print('close window selected')
+                if event.type == QUIT:
+                    return True
+
+            else:
+                return False
 
 class KeyCode: #codes for key inputs
 
-    left = 'leftArrow'
     right = 'rightArrow'
+    left = 'leftArrow'
     up = 'upArrow'
     down = 'downArrow'
-    quit = 'quit'
+    done = 'quit'
     A = 'a'
     B = 'b'
     C = 'c'

@@ -23,11 +23,14 @@ while True: #game loop
     if Input.Key(Input, kc.left, kf.keyDown):
         px -= 5
 
-    elif Input.Key(Input, kc.right, kf.keyDown):
+    if Input.Key(Input, kc.right, kf.keyDown):
         px += 5
+
+    if Input.Key(Input, 'quit', 'quit'):
+        be.sys.exit()
+        be.pygame.quit()
 
     #basic things
     window.render(window, win, testImg, px, py)
-    Input.Quit(Input)
     update()
     update.setFps(update, 60)
