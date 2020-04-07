@@ -1,4 +1,5 @@
 import BadEngine.main as be
+from BadEngine.main import KeyCode, KeyFunction
 
 #my varibles
 input = be.Input()
@@ -16,10 +17,10 @@ while True: #game loop
     window.setBackground((146, 244, 255))
 
     #inputs
-    if input.Key('leftArrow', 'keyd'):
+    if input.Key(KeyCode.left, KeyFunction.keyDown):
         px -= 5
 
-    if input.Key('rightArrow', 'keyd'):
+    if input.Key(KeyCode.right, KeyFunction.keyDown):
         px += 5
 
     if input.Quit():
