@@ -1,36 +1,31 @@
 import BadEngine.main as be
 
 #my varibles
-Input = be.Input
-kf = be.KeyFunction
-kc = be.KeyCode
-update = be.Update
-img = be.Image
-window = be.Window
-
-win = window.create(window, 400, 400 , 'demo for BadEngine')
-testImg = img.load(img, 'img/test.png')
+input = be.Input()
+window = be.Window(400, 400, 'demo for BadEngine')
+testImg = be.Image.load('img/test.png')
 
 #normal game varibles
 px,py = 50,50
 
 while True: #game loop
-    
+
+    input.update()
+
     #testing out all of my classes
-    window.setBackground(window, win, (146, 244, 255))
+    window.setBackground((146, 244, 255))
 
     #inputs
-    if Input.Key(Input, kc.left, kf.keyDown):
+    if input.Key('leftArrow', 'keyd'):
         px -= 5
 
-    if Input.Key(Input, kc.right, kf.keyDown):
+    if input.Key('rightArrow', 'keyd'):
         px += 5
 
-    if Input.Key(Input, 'quit', 'quit'):
+    if input.Quit():
         be.sys.exit()
         be.pygame.quit()
 
     #basic things
-    window.render(window, win, testImg, px, py)
-    update()
-    update.setFps(update, 60)
+    window.render(testImg, px, py)
+    window.flip()
