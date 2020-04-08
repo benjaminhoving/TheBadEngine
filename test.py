@@ -16,7 +16,7 @@ testImg = be.Image.load('img/test.png')
 player = GameObject(testImg, [50, 50], 50)
 
 #testing colision
-test_rect = pygame.rect(100, 100, 100, 50)
+test_rect = pygame.Rect(100, 100, 100, 50)
 
 while True: #game loop
 
@@ -33,9 +33,9 @@ while True: #game loop
 
     #colisions
     if player.collision(test_rect):
-        pygame.draw.rect(window, (255, 0, 0), test_rect)
+        pygame.draw.rect(window.display, (255, 0, 0), test_rect)
     else:
-        pygame.draw.rect(window, (0,0,0), test_rect)
+        pygame.draw.rect(window.display, (0,0,0), test_rect)
 
     #testing out all of my classes
     player.falling(window.height)

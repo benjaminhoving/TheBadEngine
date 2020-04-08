@@ -155,7 +155,7 @@ class GameObject:
 
     def collision(self, other):
 
-        colRect = pygame.rect(
+        colRect = pygame.Rect(
             self.positionX, self.positionY, 
             self.image.get_width(), self.image.get_height()
             )
