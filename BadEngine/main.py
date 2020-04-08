@@ -126,17 +126,25 @@ class Window: #make the screen for the game
 
 
 class Update: #update all the little things
-
     def __init__(self): #updating the screen
-        pygame.display.update()
+        # NOTE: normally, this sort of stuff isn't done in an initializer (__init__ method)
+        # and tbh, because all the methods in this class are classmethods, we don't really even need an initializer
+        pass
 
-    def setFps(self, FramesPerSecond): #how many frames pass in a second
+    @classmethod
+    def update(cls):
+        # this line could go here, but in the test.py, you call window.flip() which essentially does the same thing
+        # pygame.display.update()
+        pass
 
+    @classmethod
+    def setFps(cls, FramesPerSecond): #how many frames pass in a second
         if FramesPerSecond == None: #checking if it has been set or not
             FramesPerSecond = 60
 
         tic = pygame.time.Clock()
         tic.tick(FramesPerSecond)
+
 
 class Image: #handling images
     @staticmethod
@@ -144,8 +152,8 @@ class Image: #handling images
         return pygame.image.load(path)
         # print('The path of the image: ' + path)
 
-class GameObject:
 
+class GameObject:
     def __init__(self, image, position, weight): #the base values of GameObject
 
         self.weight = weight

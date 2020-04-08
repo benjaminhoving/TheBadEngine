@@ -49,5 +49,5 @@ while True: #game loop
     window.flip()
 
     #update basics
-    Update.setFps(Update, 60)
+    Update.setFps(60)
     Update()
