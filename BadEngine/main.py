@@ -49,20 +49,20 @@ class KeyFunction:
 
 
 class Input:
-    KEY_MAP = {
+    KEY_MAP = { # adding the KeyCode to input
         pygame.K_LEFT: KeyCode.left,
         pygame.K_RIGHT: KeyCode.right,
         pygame.K_UP: KeyCode.up,
         pygame.K_DOWN: KeyCode.down,
     }
 
-    EVENT_TYPE_MAP = {
+    EVENT_TYPE_MAP = { # applying the KeyFunction class to input
         pygame.QUIT: KeyFunction.Quit,
         pygame.KEYDOWN: KeyFunction.keyDown,
         pygame.KEYUP: KeyFunction.keyUp,
     }
 
-    EVENT_TYPE_MAPPERS = {
+    EVENT_TYPE_MAPPERS = { # implementing the KeyFunction
         pygame.QUIT: lambda e: (Input.EVENT_TYPE_MAP.get(e.type, None),),
         pygame.KEYDOWN: lambda e: (Input.EVENT_TYPE_MAP.get(e.type, None), Input.KEY_MAP.get(e.key, None)),
         pygame.KEYUP: lambda e: (Input.EVENT_TYPE_MAP.get(e.type, None), Input.KEY_MAP.get(e.key, None)),
@@ -73,7 +73,7 @@ class Input:
     def __init__(self):
         self.events = set()
 
-    def update(self):
+    def update(self): #updates the input system
         self.events = self._process_pygame_events(pygame.event.get())
 
     @classmethod
@@ -104,12 +104,18 @@ class Input:
 class Window: #make the screen for the game
 
     def __init__(self, x, y, name):
+
+        self.width = x
+        self.height = y
+
         self.display = pygame.display.set_mode((x, y), 0, 32)
         pygame.display.set_caption(name)
 
-    def render(self, image, x, y): #to render the select image onto the select window
+    def render(self, gameObject): #to render the select image onto the select window
         # print('image rendered')
-        return self.display.blit(image, (x, y))
+        return self.display.blit(
+            gameObject.image, (gameObject.positionX, gameObject.positionY)
+            )
 
     def setBackground(self, rgb):
         # print('background color set')
@@ -137,3 +143,31 @@ class Image: #handling images
     def load(path): #loading an image
         return pygame.image.load(path)
         # print('The path of the image: ' + path)
+
+class GameObject:
+
+    def __init__(self, image, position, weight): #the base values of GameObject
+
+        self.weight = weight
+        self.image = image
+        self.positionX = position[0]
+        self.positionY = position[1]
+
+    def collision(self, other):
+
+        colRect = pygame.rect(
+            self.positionX, self.positionY, 
+            self.image.get_width(), self.image.get_height()
+            )
+
+        if colRect.colliderect(other):
+            print('a colision happened')
+            return True
+
+    def falling(self, windowHeight):
+
+        if self.positionY > windowHeight - self.image.get_height():
+            self.positionY = -self.weight
+        else:
+            self.weight += 5
+        self.positionY = self.weight

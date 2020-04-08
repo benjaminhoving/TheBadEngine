@@ -1,32 +1,53 @@
+
+import pygame
 import BadEngine.main as be
-from BadEngine.main import KeyCode, KeyFunction
+from BadEngine.main import (
+    KeyCode, KeyFunction, Update, GameObject
+)
 
 #my varibles
 input = be.Input()
 window = be.Window(400, 400, 'demo for BadEngine')
+
+#images
 testImg = be.Image.load('img/test.png')
 
-#normal game varibles
-px,py = 50,50
+#GameObjects
+player = GameObject(testImg, [50, 50], 50)
+
+#testing colision
+test_rect = pygame.rect(100, 100, 100, 50)
 
 while True: #game loop
 
-    input.update()
-
-    #testing out all of my classes
-    window.setBackground((146, 244, 255))
-
     #inputs
     if input.Key(KeyCode.left, KeyFunction.keyDown):
-        px -= 5
+        player.positionX -= 5
 
     if input.Key(KeyCode.right, KeyFunction.keyDown):
-        px += 5
+        player.positionX += 5
 
     if input.Quit():
         be.sys.exit()
         be.pygame.quit()
 
-    #basic things
-    window.render(testImg, px, py)
+    #colisions
+    if player.collision(test_rect):
+        pygame.draw.rect(window, (255, 0, 0), test_rect)
+    else:
+        pygame.draw.rect(window, (0,0,0), test_rect)
+
+    #testing out all of my classes
+    player.falling(window.height)
+
+    #update inputs
+    input.update()
+
+    #update window and graphics
+    window.setBackground((146, 244, 255))
+    window.render(player)
     window.flip()
+
+    #update basics
+    Update.setFps(Update, 60)
+    Update()
